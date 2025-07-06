@@ -11,8 +11,8 @@ using RL.Data;
 namespace RL.Data.Migrations
 {
     [DbContext(typeof(RLContext))]
-    [Migration("20230324214703_InsertProcedures")]
-    partial class InsertProcedures
+    [Migration("20250704033219_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,10 +38,37 @@ namespace RL.Data.Migrations
 
             modelBuilder.Entity("RL.Data.DataModels.PlanProcedure", b =>
                 {
+                    b.Property<int>("PlanProcedureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("PlanId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProcedureId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("PlanProcedureId");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("ProcedureId");
+
+                    b.ToTable("PlanProcedures");
+                });
+
+            modelBuilder.Entity("RL.Data.DataModels.PlanProcedureUser", b =>
+                {
+                    b.Property<int>("PlanProcedureId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreateDate")
@@ -50,11 +77,11 @@ namespace RL.Data.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("PlanId", "ProcedureId");
+                    b.HasKey("PlanProcedureId", "UserId");
 
-                    b.HasIndex("ProcedureId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("PlanProcedures");
+                    b.ToTable("PlanProcedureUsers");
                 });
 
             modelBuilder.Entity("RL.Data.DataModels.Procedure", b =>
@@ -826,6 +853,13 @@ namespace RL.Data.Migrations
                             CreateDate = new DateTime(1999, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Patryk Skwarko",
                             UpdateDate = new DateTime(1999, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            CreateDate = new DateTime(2025, 7, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Aakash Garg",
+                            UpdateDate = new DateTime(2025, 7, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -848,9 +882,33 @@ namespace RL.Data.Migrations
                     b.Navigation("Procedure");
                 });
 
+            modelBuilder.Entity("RL.Data.DataModels.PlanProcedureUser", b =>
+                {
+                    b.HasOne("RL.Data.DataModels.PlanProcedure", "PlanProcedure")
+                        .WithMany("PlanProcedureUsers")
+                        .HasForeignKey("PlanProcedureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RL.Data.DataModels.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PlanProcedure");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("RL.Data.DataModels.Plan", b =>
                 {
                     b.Navigation("PlanProcedures");
+                });
+
+            modelBuilder.Entity("RL.Data.DataModels.PlanProcedure", b =>
+                {
+                    b.Navigation("PlanProcedureUsers");
                 });
 #pragma warning restore 612, 618
         }

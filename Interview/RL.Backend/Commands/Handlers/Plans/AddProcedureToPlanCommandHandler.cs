@@ -1,9 +1,10 @@
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
+
 using RL.Backend.Exceptions;
 using RL.Backend.Models;
 using RL.Data;
-using RL.Data.DataModels;
 
 namespace RL.Backend.Commands.Handlers.Plans;
 
@@ -40,9 +41,10 @@ public class AddProcedureToPlanCommandHandler : IRequestHandler<AddProcedureToPl
             if (plan.PlanProcedures.Any(p => p.ProcedureId == procedure.ProcedureId))
                 return ApiResponse<Unit>.Succeed(new Unit());
 
-            plan.PlanProcedures.Add(new PlanProcedure
+            plan.PlanProcedures.Add(new Data.DataModels.PlanProcedure
             {
-                ProcedureId = procedure.ProcedureId
+                ProcedureId = procedure.ProcedureId,
+                PlanId = request.PlanId
             });
 
             await _context.SaveChangesAsync();

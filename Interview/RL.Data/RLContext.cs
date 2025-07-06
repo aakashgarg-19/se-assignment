@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using RL.Data.DataModels;
 using RL.Data.DataModels.Common;
 
@@ -9,6 +10,7 @@ public class RLContext : DbContext
     public DbSet<PlanProcedure> PlanProcedures { get; set; }
     public DbSet<Procedure> Procedures { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<PlanProcedureUser> PlanProcedureUsers { get; set; }
 
     public RLContext() { }
     public RLContext(DbContextOptions<RLContext> options) : base(options) { }
@@ -19,9 +21,16 @@ public class RLContext : DbContext
 
         builder.Entity<PlanProcedure>(typeBuilder =>
         {
-            typeBuilder.HasKey(pp => new { pp.PlanId, pp.ProcedureId });
+            typeBuilder.HasKey(pp => new { pp.PlanProcedureId });
             typeBuilder.HasOne(pp => pp.Plan).WithMany(p => p.PlanProcedures);
             typeBuilder.HasOne(pp => pp.Procedure).WithMany();
+        });
+
+        builder.Entity<PlanProcedureUser>(typeBuilder =>
+        {
+            typeBuilder.HasKey(ppu => new { ppu.PlanProcedureId, ppu.UserId });
+            typeBuilder.HasOne(ppu => ppu.PlanProcedure).WithMany(p => p.PlanProcedureUsers);
+            typeBuilder.HasOne(pp => pp.User).WithMany();
         });
 
         //Add procedure Seed Data
@@ -63,6 +72,12 @@ public class RLContext : DbContext
                     Name = "Patryk Skwarko",
                     CreateDate = new DateTime(1999,12,13),
                     UpdateDate = new DateTime(1999,12,13)
+                },
+                new User {
+                    UserId = 5,
+                    Name = "Aakash Garg",
+                    CreateDate = new DateTime(2025,07,03),
+                    UpdateDate = new DateTime(2025,07,03)
                 }
             });
         });

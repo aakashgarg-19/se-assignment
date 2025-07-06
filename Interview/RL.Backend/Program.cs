@@ -1,7 +1,10 @@
 using System.Text.Json;
-using Microsoft.AspNetCore.OData;
-using RL.Data;
+
 using MediatR;
+
+using Microsoft.AspNetCore.OData;
+
+using RL.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +26,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: corsPolicy,
     policy =>
     {
-        policy.WithOrigins("http://localhost:3001").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("http://localhost:3000", "http://localhost:3001").AllowAnyHeader().AllowAnyMethod();
     });
 });
 

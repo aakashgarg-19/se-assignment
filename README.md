@@ -18,7 +18,7 @@ docker-compose up -d --build
 
 ## Additional Information
 
-For information outline the existing backend table structure, take a look at [DataModel.PNG](DataModel.PNG) in this folder
+For information outline the existing backend table structure, take a look at [DataModel.PNG](./DataModel.PNG) in this folder
 
 More information about the migrations: [migrations.md](./Interview/RL.Data/migrations.md)
 
@@ -62,3 +62,19 @@ Provide functionality to remove all users from a procedure at once.
 1. Create table structure to store the assigned users
 2. Create endpoint(s) to interact with new table structure
 3. Hook up endpoint(s) to the frontend so when a user is selected, they are correctly assigned to that procedure
+
+
+## Updated Data Model
+
+![Data model](./DataModel.PNG)
+
+## Unit Test Results
+
+![Unit Test Results](./UnitTestResults.PNG)
+
+## Demo Video of the Solution
+
+[![Watch the demo](https://i9.ytimg.com/vi/xvPHYWKOgFE/mqdefault.jpg?sqp=CJDXqsMG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLD6Vwiez_719-60pgZHsmFOVD-s2A)](https://youtu.be/xvPHYWKOgFE)
+
+
+

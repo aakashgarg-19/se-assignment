@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   addProcedureToPlan,
@@ -34,21 +34,9 @@ const Plan = () => {
   const handleAddProcedureToPlan = async (procedure) => {
     const hasProcedureInPlan = planProcedures.some((p) => p.procedureId === procedure.procedureId);
     if (hasProcedureInPlan) return;
-
     await addProcedureToPlan(id, procedure.procedureId);
-    setPlanProcedures((prevState) => {
-      return [
-        ...prevState,
-        {
-          planId: id,
-          procedureId: procedure.procedureId,
-          procedure: {
-            procedureId: procedure.procedureId,
-            procedureTitle: procedure.procedureTitle,
-          },
-        },
-      ];
-    });
+    var newPlanProcedures = await getPlanProcedures(id);
+    setPlanProcedures(newPlanProcedures);
   };
 
   return (
@@ -82,7 +70,7 @@ const Plan = () => {
                       {planProcedures.map((p) => (
                         <PlanProcedureItem
                           key={p.procedure.procedureId}
-                          procedure={p.procedure}
+                          planProcedure={p}
                           users={users}
                         />
                       ))}

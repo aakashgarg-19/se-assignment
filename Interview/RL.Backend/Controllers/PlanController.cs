@@ -1,8 +1,9 @@
 using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+
 using RL.Backend.Commands;
-using RL.Backend.Commands.Handlers.Plans;
 using RL.Backend.Models;
 using RL.Data;
 using RL.Data.DataModels;
