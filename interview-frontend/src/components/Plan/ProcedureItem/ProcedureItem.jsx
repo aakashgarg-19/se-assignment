@@ -1,6 +1,7 @@
 import React from "react";
 
 const ProcedureItem = ({ procedure, handleAddProcedureToPlan, planProcedures }) => {
+    const procedureCheckboxId = `procedureCheckbox-${procedure.procedureId}`
     return (
         <div className="py-2">
             <div className="form-check">
@@ -8,7 +9,7 @@ const ProcedureItem = ({ procedure, handleAddProcedureToPlan, planProcedures }) 
                     className="form-check-input"
                     type="checkbox"
                     value=""
-                    id="procedureCheckbox"
+                    id={procedureCheckboxId}
                     checked={
                         planProcedures.find(
                             (p) => p.procedureId === procedure.procedureId
@@ -18,7 +19,7 @@ const ProcedureItem = ({ procedure, handleAddProcedureToPlan, planProcedures }) 
                     }
                     onChange={() => handleAddProcedureToPlan(procedure)}
                 ></input>
-                <label className="form-check-label" htmlFor="procedureCheckbox">
+                <label className="form-check-label" htmlFor={procedureCheckboxId}>
                     {procedure.procedureTitle}
                 </label>
             </div>
