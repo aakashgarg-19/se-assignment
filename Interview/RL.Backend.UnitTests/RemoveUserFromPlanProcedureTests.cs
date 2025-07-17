@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using Moq;
 
@@ -15,6 +16,14 @@ namespace RL.Backend.UnitTests;
 [TestClass]
 public class RemoveUserFromPlanProcedureTests
 {
+    private Mock<ILogger<RemoveUserFromPlanProcedureCommandHandler>> _mockLogger = null!;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _mockLogger = new Mock<ILogger<RemoveUserFromPlanProcedureCommandHandler>>();
+    }
+
     [TestMethod]
     [DataRow(-1)]
     [DataRow(0)]
@@ -22,7 +31,7 @@ public class RemoveUserFromPlanProcedureTests
     {
         // Arrange
         var context = new Mock<RLContext>();
-        var sut = new RemoveUserFromPlanProcedureCommandHandler(context.Object);
+        var sut = new RemoveUserFromPlanProcedureCommandHandler(context.Object, _mockLogger.Object);
 
         var request = new RemoveUserFromPlanProcedureCommand
         {
@@ -46,7 +55,7 @@ public class RemoveUserFromPlanProcedureTests
     {
         // Arrange
         var context = new Mock<RLContext>();
-        var sut = new RemoveUserFromPlanProcedureCommandHandler(context.Object);
+        var sut = new RemoveUserFromPlanProcedureCommandHandler(context.Object, _mockLogger.Object);
 
         var request = new RemoveUserFromPlanProcedureCommand
         {
@@ -70,7 +79,7 @@ public class RemoveUserFromPlanProcedureTests
     {
         // Arrange
         var context = DbContextHelper.CreateContext();
-        var sut = new RemoveUserFromPlanProcedureCommandHandler(context);
+        var sut = new RemoveUserFromPlanProcedureCommandHandler(context, _mockLogger.Object);
 
         context.PlanProcedureUsers.Add(new PlanProcedureUser
         {
@@ -98,7 +107,7 @@ public class RemoveUserFromPlanProcedureTests
     {
         // Arrange
         var context = DbContextHelper.CreateContext();
-        var sut = new RemoveUserFromPlanProcedureCommandHandler(context);
+        var sut = new RemoveUserFromPlanProcedureCommandHandler(context, _mockLogger.Object);
 
         var request = new RemoveUserFromPlanProcedureCommand
         {
@@ -119,7 +128,7 @@ public class RemoveUserFromPlanProcedureTests
     {
         // Arrange
         var context = DbContextHelper.CreateContext();
-        var sut = new RemoveUserFromPlanProcedureCommandHandler(context);
+        var sut = new RemoveUserFromPlanProcedureCommandHandler(context, _mockLogger.Object);
 
         context.PlanProcedureUsers.Add(new PlanProcedureUser
         {
@@ -153,7 +162,7 @@ public class RemoveUserFromPlanProcedureTests
     {
         // Arrange
         var context = DbContextHelper.CreateContext();
-        var sut = new RemoveUserFromPlanProcedureCommandHandler(context);
+        var sut = new RemoveUserFromPlanProcedureCommandHandler(context, _mockLogger.Object);
 
         context.PlanProcedureUsers.Add(new PlanProcedureUser
         {
@@ -181,7 +190,7 @@ public class RemoveUserFromPlanProcedureTests
     {
         // Arrange
         var context = DbContextHelper.CreateContext();
-        var sut = new RemoveUserFromPlanProcedureCommandHandler(context);
+        var sut = new RemoveUserFromPlanProcedureCommandHandler(context, _mockLogger.Object);
 
         context.PlanProcedureUsers.Add(new PlanProcedureUser
         {

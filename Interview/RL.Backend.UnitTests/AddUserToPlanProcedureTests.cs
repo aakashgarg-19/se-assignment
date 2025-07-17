@@ -3,6 +3,7 @@
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using Moq;
 
@@ -17,6 +18,14 @@ namespace RL.Backend.UnitTests;
 [TestClass]
 public class AddUserToPlanProcedureTests
 {
+    private Mock<ILogger<AddUserToPlanProcedureCommandHandler>> _mockLogger = null!;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _mockLogger = new Mock<ILogger<AddUserToPlanProcedureCommandHandler>>();
+    }
+
     [TestMethod]
     [DataRow(-1)]
     [DataRow(0)]
@@ -25,7 +34,7 @@ public class AddUserToPlanProcedureTests
     {
         // Given
         var context = new Mock<RLContext>();
-        var sut = new AddUserToPlanProcedureCommandHandler(context.Object);
+        var sut = new AddUserToPlanProcedureCommandHandler(context.Object, _mockLogger.Object);
         var request = new AddUserToPlanProcedureCommand()
         {
             PlanProcedureId = planProcedureId,
@@ -48,7 +57,7 @@ public class AddUserToPlanProcedureTests
     {
         // Given
         var context = new Mock<RLContext>();
-        var sut = new AddUserToPlanProcedureCommandHandler(context.Object);
+        var sut = new AddUserToPlanProcedureCommandHandler(context.Object, _mockLogger.Object);
         var request = new AddUserToPlanProcedureCommand()
         {
             PlanProcedureId = 1,
@@ -70,7 +79,7 @@ public class AddUserToPlanProcedureTests
     {
         // Given
         var context = DbContextHelper.CreateContext();
-        var sut = new AddUserToPlanProcedureCommandHandler(context);
+        var sut = new AddUserToPlanProcedureCommandHandler(context, _mockLogger.Object);
         var request = new AddUserToPlanProcedureCommand()
         {
             PlanProcedureId = planProcedureId,
@@ -104,7 +113,7 @@ public class AddUserToPlanProcedureTests
     {
         // Given
         var context = DbContextHelper.CreateContext();
-        var sut = new AddUserToPlanProcedureCommandHandler(context);
+        var sut = new AddUserToPlanProcedureCommandHandler(context, _mockLogger.Object);
         var request = new AddUserToPlanProcedureCommand()
         {
             PlanProcedureId = 1,
@@ -137,7 +146,7 @@ public class AddUserToPlanProcedureTests
     {
         // Given
         var context = DbContextHelper.CreateContext();
-        var sut = new AddUserToPlanProcedureCommandHandler(context);
+        var sut = new AddUserToPlanProcedureCommandHandler(context, _mockLogger.Object);
         var request = new AddUserToPlanProcedureCommand()
         {
             PlanProcedureId = planProcedureId,
@@ -174,7 +183,7 @@ public class AddUserToPlanProcedureTests
     {
         // Given
         var context = DbContextHelper.CreateContext();
-        var sut = new AddUserToPlanProcedureCommandHandler(context);
+        var sut = new AddUserToPlanProcedureCommandHandler(context, _mockLogger.Object);
         var request = new AddUserToPlanProcedureCommand()
         {
             PlanProcedureId = planProcedureId,

@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 
+using Microsoft.Extensions.Logging;
+
 using Moq;
 
 using RL.Backend.Commands;
@@ -13,6 +15,14 @@ namespace RL.Backend.UnitTests;
 [TestClass]
 public class GetPlanProcedureUsersQueryTests
 {
+    private Mock<ILogger<GetPlanProcedureUsersQueryHandler>> _mockLogger = null!;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _mockLogger = new Mock<ILogger<GetPlanProcedureUsersQueryHandler>>();
+    }
+
     [TestMethod]
     [DataRow(-1)]
     [DataRow(0)]
@@ -20,7 +30,7 @@ public class GetPlanProcedureUsersQueryTests
     {
         // Arrange
         var context = new Mock<RLContext>();
-        var sut = new GetPlanProcedureUsersQueryHandler(context.Object);
+        var sut = new GetPlanProcedureUsersQueryHandler(context.Object, _mockLogger.Object);
 
         var request = new GetPlanProcedureUsersQuery
         {
@@ -40,7 +50,7 @@ public class GetPlanProcedureUsersQueryTests
     {
         // Arrange
         var context = DbContextHelper.CreateContext();
-        var sut = new GetPlanProcedureUsersQueryHandler(context);
+        var sut = new GetPlanProcedureUsersQueryHandler(context, _mockLogger.Object);
 
         var request = new GetPlanProcedureUsersQuery
         {
@@ -60,7 +70,7 @@ public class GetPlanProcedureUsersQueryTests
     {
         // Arrange
         var context = DbContextHelper.CreateContext();
-        var sut = new GetPlanProcedureUsersQueryHandler(context);
+        var sut = new GetPlanProcedureUsersQueryHandler(context, _mockLogger.Object);
 
         var planProcedureId = 1;
 
